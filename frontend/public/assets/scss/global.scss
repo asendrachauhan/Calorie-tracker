@@ -1,0 +1,42 @@
+/*
+Scss Master
+Author: Vimal Sharma
+All rights reserved
+ */
+@import "../css/bootstrap.min.css";
+/*Helpers Scss Files */
+@import "helpers/breakpoint";
+@import "helpers/variable";
+@import "helpers/fonts";
+@import "helpers/color";
+@import "helpers/breakpoint";
+@import "helpers/mixin";
+@import "helpers/extend-directive";
+@import "helpers/button";
+
+/*Base Scss Files */
+
+@import "base/default";
+
+/*Helpers Scss Files */
+
+@import "helpers/input";
+@import "helpers/selectbox";
+@import "helpers/checkBox";
+@import "helpers/radioBox";
+@import "helpers/arrow";
+@import "helpers/icons";
+@import "helpers/card";
+@import "helpers/table";
+/*Layout Scss Files */
+
+ @import "layout/header";
+ @import "layout/footer";
+
+/*Components Scss Files */
+@import "components/add-data-modal";
+
+// page Scss Files
+
+@import "pages/signup-page";
+@import "pages/view-calorie-data";

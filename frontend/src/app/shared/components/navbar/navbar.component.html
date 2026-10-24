@@ -1,0 +1,13 @@
+<header class="header">
+  <div class="container nav-container">
+    <div class="logo">
+      <a routerLink="/users">
+        <img src="assets/img/logo.png" alt="Net Calorie Tracker Logo">
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a routerLink="/users" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="nav-item">User List</a>
+      <a routerLink="/signup" routerLinkActive="active-link" class="nav-item btn-nav-signup">+ Sign Up</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,166 @@
+<div class="mid-container">
+  <div class="container">
+    <!-- Title Row with Add New User Button -->
+    <div class="title-row">
+      <h1 class="title">User List</h1>
+      <div class="title-row-right">
+        <a routerLink="/signup" class="btn-primary" title="Register a new user profile">
+          <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Add New User</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Filter bar (only when users exist and not loading) -->
+    <div *ngIf="!isLoading && users.length > 0" class="filter-bar">
+      <div class="search-input-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          placeholder="Search users by name..."
+          [ngModel]="searchTerm"
+          (ngModelChange)="onSearchChange($event)"
+          class="search-input"
+          aria-label="Search users by name" />
+        <button
+          *ngIf="searchTerm"
+          type="button"
+          class="clear-search-btn"
+          (click)="clearSearch()"
+          title="Clear search filter">
+          ✕
+        </button>
+      </div>
+      <span class="user-count">{{ filteredUsers.length }} of {{ users.length }} user(s)</span>
+    </div>
+
+    <!-- Loading State Spinner -->
+    <div *ngIf="isLoading" class="white-card">
+      <app-loading-state
+        message="Loading registered users..."
+        [hasError]="!!errorMessage"
+        [errorMessage]="errorMessage"
+        (retry)="loadUsers()">
+      </app-loading-state>
+    </div>
+
+    <!-- User Table -->
+    <div *ngIf="!isLoading" class="user-list">
+      <table *ngIf="filteredUsers.length > 0" class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
+        <thead>
+          <tr>
+            <th scope="col" class="name">Name</th>
+            <th scope="col" class="weight">Weight</th>
+            <th scope="col" class="height">Height</th>
+            <th scope="col" class="gender">Gender</th>
+            <th scope="col" class="age">Age</th>
+            <th scope="col" class="bmr">BMR</th>
+            <th scope="col" class="action">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+            <th scope="row">
+              <a
+                [routerLink]="['/users', user._id, 'data']"
+                class="user-name-link"
+                [title]="'View records for ' + user.name">
+                {{ user.name }}
+              </a>
+            </th>
+            <td data-label="Weight">{{ user.weight }} kg</td>
+            <td data-label="Height">{{ user.height }} cm</td>
+            <td data-label="Gender" class="capitalize">{{ user.gender }}</td>
+            <td data-label="Age">{{ user.age }} yrs</td>
+            <th scope="col" data-label="BMR">{{ user.bmr | number:'1.2-2' }}</th>
+            <td data-label="Action">
+              <div class="btn-set">
+                <!-- View Button with Eye Icon -->
+                <a
+                  class="btn-secondary btn-icon-label"
+                  [routerLink]="['/users', user._id, 'data']"
+                  [title]="'View history for ' + user.name">
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <span>View</span>
+                </a>
+
+                <!-- Add Data Button with Calendar-Plus Icon -->
+                <button
+                  type="button"
+                  class="btn-primary add-data-btn btn-icon-label"
+                  (click)="openAddData(user)"
+                  [title]="'Add daily data for ' + user.name">
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                    <line x1="12" y1="14" x2="12" y2="18"></line>
+                    <line x1="10" y1="16" x2="14" y2="16"></line>
+                  </svg>
+                  <span>Add Data</span>
+                </button>
+
+                <!-- Delete Button with Trash Can Icon -->
+                <button
+                  type="button"
+                  class="btn-delete"
+                  (click)="confirmDelete(user)"
+                  [title]="'Delete user profile for ' + user.name">
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Empty state when no users registered -->
+      <div *ngIf="users.length === 0" class="white-card">
+        <app-empty-state
+          type="users"
+          title="No Users Registered Yet"
+          description="Get started by creating your first profile. You'll be able to calculate Harris-Benedict BMR, log daily meals, and track physical activity."
+          actionLabel="+ Register First User"
+          [actionLink]="['/signup']">
+        </app-empty-state>
+      </div>
+
+      <!-- Empty state when filter matches nothing -->
+      <div *ngIf="users.length > 0 && filteredUsers.length === 0" class="white-card">
+        <app-empty-state
+          type="search"
+          title="No Matching Users Found"
+          [description]="'No registered users matched your search for &quot;' + searchTerm + '&quot;.'"
+          actionLabel="Clear Search"
+          (actionClick)="searchTerm = ''">
+        </app-empty-state>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reusable Add Data Modal -->
+<app-add-data-modal
+  [isOpen]="isModalOpen"
+  [initialTab]="'food'"
+  [userId]="activeUser?._id || ''"
+  [userName]="activeUser?.name || ''"
+  [userWeight]="activeUser?.weight || 70"
+  (close)="isModalOpen = false"
+  (dataSaved)="onDataSaved($event)">
+</app-add-data-modal>

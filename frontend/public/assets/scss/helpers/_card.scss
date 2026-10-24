@@ -1,0 +1,9 @@
+.white-card{
+    background: $white;
+    border: 1px light-gray-color solid;
+    padding: 20px;
+    @include border-radius(10px);
+    .card-body{
+        padding: 0px;
+    }
+}

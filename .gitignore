@@ -1,0 +1,21 @@
+
+# Dependencies
+node_modules/
+
+# Build files
+dist/
+.angular/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

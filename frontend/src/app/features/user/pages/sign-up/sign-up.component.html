@@ -1,0 +1,112 @@
+<div class="mid-container">
+  <div class="container signup-layout-wrap">
+    <!-- Standard Semantic Breadcrumb Navigation -->
+    <app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+    <div class="white-card signup-card">
+      <h1>Sign Up</h1>
+
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="card-body">
+        <!-- Name -->
+        <div class="input-field">
+          <label for="name">Name *</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Full Name"
+            formControlName="name"
+            [class.is-invalid]="f['name'].touched && f['name'].invalid"
+            title="Enter user's full name" />
+          <div *ngIf="f['name'].touched && f['name'].invalid" class="invalid-feedback">
+            <span *ngIf="f['name'].errors?.['required']">Name is required.</span>
+            <span *ngIf="f['name'].errors?.['maxlength']">Name cannot exceed 100 characters.</span>
+          </div>
+        </div>
+
+        <!-- Weight -->
+        <div class="input-field">
+          <label for="weight">Weight (kg) *</label>
+          <input
+            id="weight"
+            type="number"
+            step="0.1"
+            placeholder="Weight in kg"
+            formControlName="weight"
+            [class.is-invalid]="f['weight'].touched && f['weight'].invalid"
+            title="Enter user's weight in kilograms (1 - 500)" />
+          <div *ngIf="f['weight'].touched && f['weight'].invalid" class="invalid-feedback">
+            <span *ngIf="f['weight'].errors?.['required']">Weight is required.</span>
+            <span *ngIf="f['weight'].errors?.['min'] || f['weight'].errors?.['max']">Weight must be between 1 and 500 kg.</span>
+          </div>
+        </div>
+
+        <!-- Height -->
+        <div class="input-field">
+          <label for="height">Height (cm) *</label>
+          <input
+            id="height"
+            type="number"
+            step="0.5"
+            placeholder="Height in cm"
+            formControlName="height"
+            [class.is-invalid]="f['height'].touched && f['height'].invalid"
+            title="Enter user's height in centimeters (30 - 300)" />
+          <div *ngIf="f['height'].touched && f['height'].invalid" class="invalid-feedback">
+            <span *ngIf="f['height'].errors?.['required']">Height is required.</span>
+            <span *ngIf="f['height'].errors?.['min'] || f['height'].errors?.['max']">Height must be between 30 and 300 cm.</span>
+          </div>
+        </div>
+
+        <!-- Gender: Custom Searchable Dropdown -->
+        <div class="input-field">
+          <label>Gender *</label>
+          <app-searchable-dropdown
+            placeholder="Select Gender"
+            [options]="genderOptions"
+            [showSearch]="false"
+            formControlName="gender">
+          </app-searchable-dropdown>
+        </div>
+
+        <!-- Age / Date of Birth: Custom Datepicker -->
+        <div class="input-field">
+          <label>Date of Birth *</label>
+          <app-custom-datepicker
+            placeholder="Select Date of Birth"
+            [maxDate]="todayDate"
+            formControlName="dateOfBirth">
+          </app-custom-datepicker>
+          <div *ngIf="f['dateOfBirth'].touched && f['dateOfBirth'].invalid" class="invalid-feedback">
+            <span *ngIf="f['dateOfBirth'].errors?.['required']">Date of birth is required.</span>
+          </div>
+        </div>
+
+        <!-- Live Calculation Preview -->
+        <div *ngIf="previewBmr !== null" class="preview-box">
+          <div class="preview-item">
+            Calculated Age: <strong>{{ previewAge }} yrs</strong>
+          </div>
+          <div class="preview-item">
+            Daily BMR: <strong>{{ previewBmr | number:'1.2-2' }} kcal</strong>
+          </div>
+        </div>
+
+        <div class="input-field btn-set--right actions-row">
+          <button
+            type="button"
+            class="btn-secondary btn-cancel"
+            (click)="router.navigate(['/users'])">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn-primary"
+            [disabled]="isSubmitting || signUpForm.invalid"
+            title="Save user and compute initial BMR">
+            {{ isSubmitting ? 'Signing Up...' : 'Sign Up' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

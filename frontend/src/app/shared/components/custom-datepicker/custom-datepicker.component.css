@@ -1,0 +1,223 @@
+.custom-datepicker-wrapper {
+  position: relative;
+  width: 100%;
+  user-select: none;
+}
+
+.datepicker-input-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  width: 100%;
+  border: 1px solid #b8b8b8;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  font-size: 0.85rem;
+  color: #4e4e4e;
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.datepicker-input-box:hover {
+  border-color: var(--color-primary);
+}
+
+.datepicker-input-box.is-open {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-border);
+}
+
+.datepicker-input-box.disabled {
+  background: var(--bg-page);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.selected-text {
+  color: var(--color-text-main);
+  font-weight: 400;
+}
+
+.selected-text.placeholder {
+  color: var(--color-text-light);
+}
+
+.calendar-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+.calendar-popover {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1090;
+  background: var(--bg-card);
+  border: 1px solid #e1d3f5;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  width: 290px;
+  padding: 12px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.calendar-popover.place-above {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+
+.calendar-popover.align-right {
+  left: auto;
+  right: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0edf6;
+}
+
+.header-selectors {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-select {
+  background: #fbf9fe;
+  border: 1px solid #dcd5e8;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-main);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 6px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.header-select:hover, .header-select:focus {
+  border-color: var(--color-primary);
+}
+
+.btn-nav {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-nav:hover {
+  background: var(--color-primary-light);
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8c829e;
+  padding: 8px 0 4px 0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calendar-day {
+  background: transparent;
+  border: none;
+  height: 32px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+
+.calendar-day:hover:not(.disabled) {
+  background: var(--color-primary-light);
+  color: var(--color-primary-hover);
+}
+
+.calendar-day.other-month {
+  color: #cccccc;
+}
+
+.calendar-day.today {
+  font-weight: 700;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.calendar-day.selected {
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.calendar-day.disabled {
+  color: #e0e0e0;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.calendar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #f0edf6;
+}
+
+.btn-today, .btn-clear {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.btn-today {
+  color: var(--color-primary);
+}
+
+.btn-today:hover {
+  background: var(--color-primary-light);
+}
+
+.btn-clear {
+  color: var(--color-text-light);
+}
+
+.btn-clear:hover {
+  background: #f0f0f0;
+}

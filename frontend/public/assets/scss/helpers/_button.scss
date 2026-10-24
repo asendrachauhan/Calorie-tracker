@@ -1,0 +1,93 @@
+.btn-set--left {
+    display: flex;
+    justify-content: left;
+}
+
+.btn-set--center {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-set--right {
+    display: flex;
+    justify-content: right;
+
+    @include breakpoint(mobile) {
+        justify-content: left;
+        padding-left: 10px;
+    }
+}
+.btn-set{
+    display: flex;
+    align-items: center;
+    a,
+    button{
+        margin: 0 5px;
+    }
+}
+
+.btn-primary {
+    background-color: $primary-color;
+    color: $white;
+    border: 1px $primary-color solid;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    @include border-radius(5px);
+   
+}
+
+.btn-secondary {
+    background-color: $light-gray-color;
+    color: $black;
+    border: 1px $light-gray-color solid;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    @include border-radius(5px);
+    &:hover {
+        background-color: $secondary-color;
+        color: $white;
+        border: 1px $secondary-color solid;
+    }
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    color: $primary-color;
+    border: 1px $primary-color solid;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    @include border-radius(5px);
+    &:hover {
+        color: $white;
+        background-color: $primary-color;
+    }
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    color: $light-gray-color;
+    border: 1px $light-gray-color solid;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    @include border-radius(5px);
+    &:hover {
+        color: $white;
+        background-color: $primary-color;
+        border: 1px $primary-color solid;
+    }
+}
+.add-data-btn{
+    width: 100px;
+}

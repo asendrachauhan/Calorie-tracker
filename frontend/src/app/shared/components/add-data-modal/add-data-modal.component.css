@@ -1,0 +1,136 @@
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1050;
+  padding: 30px 16px;
+  overflow-y: auto;
+}
+
+.modal-dialog-custom {
+  width: 100%;
+  max-width: 580px;
+  margin: auto;
+  overflow: visible;
+}
+
+.add-data-modal {
+  overflow: visible;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  padding: 12px 16px 0 16px;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  line-height: 1;
+  padding: 4px 8px;
+  transition: color var(--transition-fast);
+}
+
+.btn-close-modal:hover {
+  color: var(--color-text-heading);
+}
+
+.nav-tabs {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: none;
+  gap: 8px;
+}
+
+.nav-tabs .nav-link {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 20px 24px;
+  overflow: visible;
+}
+
+.field-info {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.calorie-calc-pill {
+  background: var(--color-primary-light);
+  border-left: 4px solid var(--color-primary);
+  padding: 10px 14px;
+  margin: 14px 0 20px 0;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: #432874;
+}
+
+.input-field {
+  margin-bottom: 16px;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
+.input-field input[type="number"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #b8b8b8;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.input-field input[type="number"]:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.btn-set--center {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}

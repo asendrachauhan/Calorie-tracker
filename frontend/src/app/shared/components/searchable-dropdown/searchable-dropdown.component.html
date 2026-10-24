@@ -1,0 +1,58 @@
+<div class="custom-dropdown-container">
+  <!-- Dropdown Input Trigger Box -->
+  <div
+    class="dropdown-trigger-box"
+    [class.is-open]="isOpen"
+    [class.disabled]="disabled"
+    (click)="toggleDropdown($event)">
+    <span class="selected-label" [class.placeholder]="!selectedOption">
+      {{ selectedOption?.label || placeholder }}
+    </span>
+    <img
+      src="assets/img/dropdown-arrow.png"
+      alt="Open dropdown"
+      class="dropdown-arrow-icon"
+      [class.rotated]="isOpen" />
+  </div>
+
+  <!-- Floating Dropdown Panel with Auto Placement (Above/Below and Left/Right) -->
+  <div
+    *ngIf="isOpen"
+    class="dropdown-panel"
+    [class.place-above]="placeAbove"
+    [class.align-right]="alignRight"
+    (click)="$event.stopPropagation()">
+    <!-- Search filter input -->
+    <div class="dropdown-search-wrapper" *ngIf="showSearch">
+      <input
+        #searchInput
+        type="text"
+        class="dropdown-search-input"
+        placeholder="Type to search..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()" />
+    </div>
+
+    <!-- Options list -->
+    <div class="dropdown-options-list">
+      <div
+        *ngFor="let opt of filteredOptions"
+        class="dropdown-option-item"
+        [class.selected]="opt.value === selectedValue"
+        [title]="opt.label"
+        (click)="selectOption(opt)">
+        <div class="option-main-label">{{ opt.label }}</div>
+        <div *ngIf="opt.subtext" class="option-subtext">{{ opt.subtext }}</div>
+      </div>
+
+      <div *ngIf="filteredOptions.length === 0" class="dropdown-no-results">
+        <svg class="no-results-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <line x1="8" y1="11" x2="14" y2="11"></line>
+        </svg>
+        <p>No matching options found</p>
+      </div>
+    </div>
+  </div>
+</div>

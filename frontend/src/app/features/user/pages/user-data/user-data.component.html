@@ -1,0 +1,147 @@
+<div class="mid-container">
+  <div class="container user-all-date-data">
+    <!-- Standard Semantic Breadcrumb Navigation -->
+    <app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+    <!-- Loading State Spinner -->
+    <div *ngIf="isLoading" class="white-card">
+      <app-loading-state
+        message="Loading historical calorie records..."
+        [hasError]="!!errorMessage && !user"
+        [errorMessage]="errorMessage"
+        (retry)="retryLoading()">
+      </app-loading-state>
+    </div>
+
+    <ng-container *ngIf="!isLoading">
+      <!-- Title Row matching user-data.html -->
+      <div class="title-row">
+        <h1 class="title">{{ user?.name || 'User History' }}</h1>
+        <div class="title-row-right">
+          <button
+            type="button"
+            class="btn-primary btn-icon-label"
+            (click)="openAddData('food')"
+            title="Log new food or activity entry">
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+              <line x1="12" y1="14" x2="12" y2="18"></line>
+              <line x1="10" y1="16" x2="14" y2="16"></line>
+            </svg>
+            <span>Add Data</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- User Metrics Pill Card -->
+      <div *ngIf="user" class="user-stats-bar">
+        <div class="stat-item"><span class="stat-label">Gender:</span> <strong class="capitalize">{{ user.gender }}</strong></div>
+        <div class="stat-item"><span class="stat-label">Age:</span> <strong>{{ user.age }} yrs</strong></div>
+        <div class="stat-item"><span class="stat-label">Weight:</span> <strong>{{ user.weight }} kg</strong></div>
+        <div class="stat-item"><span class="stat-label">Height:</span> <strong>{{ user.height }} cm</strong></div>
+        <div class="stat-item"><span class="stat-label">Daily BMR:</span> <strong>{{ user.bmr | number:'1.2-2' }} kcal</strong></div>
+      </div>
+
+      <!-- Date Input Card with Custom Datepicker matching user-data.html -->
+      <div class="date-input-card">
+        <div class="date-input-container">
+          <label class="date-label">Jump to Date (Past 30 Days):</label>
+          <div class="date-input-flex">
+            <div class="date-input">
+              <app-custom-datepicker
+                [enforce30Days]="true"
+                [(ngModel)]="selectedDate"
+                (dateChange)="onDateChanged($event)">
+              </app-custom-datepicker>
+            </div>
+            <button
+              type="button"
+              class="btn-secondary btn-icon-label"
+              (click)="goToDayDetails()"
+              title="View detailed calorie breakdown for selected date">
+              <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <span>View Day</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- All Data Summary Table matching user-data.html -->
+      <div class="user-list">
+        <div class="white-card">
+          <div class="card-header-flex">
+            <h2>All Data</h2>
+            <span class="badge-total">{{ records.length }} daily records</span>
+          </div>
+
+          <table *ngIf="records.length > 0" class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">BMR</th>
+                <th scope="col">Calorie In</th>
+                <th scope="col">Calorie Out</th>
+                <th scope="col">Net Calorie</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of records">
+                <th scope="row">{{ record.date }}</th>
+                <td data-label="BMR">{{ record.bmr | number:'1.2-2' }}</td>
+                <td data-label="Calorie In">{{ record.totalCaloriesIn | number:'1.0-2' }}</td>
+                <td data-label="Calorie Out">{{ record.totalCaloriesOut | number:'1.0-2' }}</td>
+                <td data-label="Net Calorie" [class.net-positive]="record.netCalories > 0" [class.net-negative]="record.netCalories < 0">
+                  <strong>{{ record.netCalories | number:'1.2-2' }}</strong>
+                </td>
+                <td data-label="Action">
+                  <div class="btn-set">
+                    <a
+                      class="btn-secondary btn-icon-label"
+                      [routerLink]="['/users', userId, 'details']"
+                      [queryParams]="{ date: record.date }"
+                      [title]="'View detailed day breakdown for ' + record.date">
+                      <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                      <span>View</span>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Illustrated Empty State -->
+          <app-empty-state
+            *ngIf="records.length === 0"
+            type="records"
+            title="No Calorie History Yet"
+            description="No daily calorie records have been logged yet for {{ user?.name }}. Log food consumption or physical exercise to track net calories."
+            actionLabel="+ Log Food or Activity"
+            (actionClick)="openAddData('food')">
+          </app-empty-state>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Reusable Add Data Modal -->
+<app-add-data-modal
+  [isOpen]="isModalOpen"
+  [initialTab]="activeModalTab"
+  [userId]="userId"
+  [userName]="user?.name || ''"
+  [userWeight]="user?.weight || 70"
+  [initialDate]="selectedDate"
+  (close)="isModalOpen = false"
+  (dataSaved)="onDataSaved($event)">
+</app-add-data-modal>

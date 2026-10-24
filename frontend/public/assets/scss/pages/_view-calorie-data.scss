@@ -1,0 +1,118 @@
+.view-calorie-data-date-input{
+   padding: 20px 0;  
+   display: flex;
+   align-items: center;
+   @include breakpoint(mobile){
+    flex-wrap: wrap;
+   }
+    .date-input{
+       width: 250px;
+       @include breakpoint(mobile_portrait){
+         width: 100%;
+       }
+        input {
+            padding: 10px;
+            width: 100%;
+            border: 1px $light-gray-color solid;
+            @include text-size-color(0.8rem, $secondary-color);
+            background: #fff;
+            font-family: $primaryfontfaimly;
+            font-weight: 400;
+            -webkit-appearance: none;
+            border-radius: 4px;
+            &:disabled {
+                opacity: 0.5;
+            }
+        }
+   
+    }
+    .show-selected-date{
+        margin-left: auto;
+        font-size: 1rem;
+        font-weight: 600;
+        @include breakpoint(mobile_portrait){
+            width: 100%;
+            margin-left: 0;
+            margin-top: 15px;
+          }
+    }
+}
+
+.view-calorie-data-chart{
+    display: flex;
+    flex-wrap: wrap;
+    @include breakpoint(ipad_portrait){
+        flex-wrap: wrap;
+    }
+    @include breakpoint(mobile){
+        flex-wrap: wrap;
+    }
+    h2{
+        margin: 0 0 20px 0;
+        padding: 0px;
+        @extend %hd-2;
+    }
+    .food-data{
+        width: 49%;
+        @include breakpoint(ipad_portrait){
+            width: 100%;
+        }
+        @include breakpoint(mobile){
+            width: 100%;
+        }
+    }
+    .activity-data{
+        width: 49%;
+        margin-left: auto;
+        @include breakpoint(ipad_portrait){
+            width: 100%;
+            margin-top: 20px;
+        }
+        @include breakpoint(mobile){
+            width: 100%;
+            margin-top: 20px;
+        }
+    }
+}
+
+.net-calorie-data{
+    margin-top: 2%;
+    width: 49%;
+    margin-left: auto;
+    @include breakpoint(ipad_portrait){
+        width: 100%;
+    }
+    @include breakpoint(mobile){
+        width: 100%;
+    }
+    h2{
+        color: $primary-color;
+        border-bottom: 1px $light-gray-color solid;
+        padding-bottom: 15px;
+    }
+}
+.view-calorie-data{
+    padding-bottom: 2rem;
+}
+.net-calorie-row{
+    font-size: 1rem;
+    border-bottom: 1px $light-gray-color solid;
+    display: flex;
+    padding: 10px;
+    strong{
+        width: 30%;
+    }
+    span{
+        margin-left: auto;
+    }
+}
+.net-calorie-totl{
+    background: $light-gray-color;
+    strong,
+    span
+    {
+        color: #000000;
+        font-weight: 600;
+    }
+   
+}

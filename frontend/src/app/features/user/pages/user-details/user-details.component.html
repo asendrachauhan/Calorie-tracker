@@ -1,0 +1,234 @@
+<div class="mid-container">
+  <div class="container">
+    <!-- Standard Semantic Breadcrumb Navigation -->
+    <app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+    <!-- Loading State Spinner -->
+    <div *ngIf="isLoading" class="white-card">
+      <app-loading-state
+        [message]="loadingMessage"
+        [hasError]="!!errorMessage && !record"
+        [errorMessage]="errorMessage"
+        (retry)="retryLoading()">
+      </app-loading-state>
+    </div>
+
+    <!-- Main Content (when not loading) -->
+    <ng-container *ngIf="!isLoading">
+      <!-- Title Row matching user-details.html -->
+      <div class="title-row">
+        <h1 class="title">{{ user?.name || 'User Details' }}</h1>
+        <div class="title-row-right">
+          <button
+            type="button"
+            class="btn-primary btn-icon-label"
+            (click)="openAddData('food')"
+            title="Log new food or activity entry">
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+              <line x1="12" y1="14" x2="12" y2="18"></line>
+              <line x1="10" y1="16" x2="14" y2="16"></line>
+            </svg>
+            <span>Add Data</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- User Metrics Pill Card -->
+      <div *ngIf="user" class="user-stats-bar">
+        <div class="stat-item"><span class="stat-label">Gender:</span> <strong class="capitalize">{{ user.gender }}</strong></div>
+        <div class="stat-item"><span class="stat-label">Age:</span> <strong>{{ user.age }} yrs</strong></div>
+        <div class="stat-item"><span class="stat-label">Weight:</span> <strong>{{ user.weight }} kg</strong></div>
+        <div class="stat-item"><span class="stat-label">Height:</span> <strong>{{ user.height }} cm</strong></div>
+        <div class="stat-item"><span class="stat-label">Daily BMR:</span> <strong>{{ user.bmr | number:'1.2-2' }} kcal</strong></div>
+      </div>
+
+      <!-- Date selector and display matching user-details.html -->
+      <div class="view-calorie-data">
+        <div class="view-calorie-data-date-input">
+          <div class="date-input">
+            <app-custom-datepicker
+              [enforce30Days]="true"
+              [(ngModel)]="selectedDate"
+              (dateChange)="onDateChanged($event)">
+            </app-custom-datepicker>
+          </div>
+          <div class="show-selected-date">
+            Date : - {{ displayFormattedDate }}
+          </div>
+        </div>
+
+        <!-- Net Calorie Formula & Summary Card -->
+        <div *ngIf="record" class="calorie-summary-banner white-card">
+          <div class="summary-metric" title="Total calories consumed from logged foods">
+            <span class="metric-title">Calories In</span>
+            <span class="metric-val text-green">+ {{ record.totalCaloriesIn | number:'1.0-2' }}</span>
+            <span class="metric-sub">from food</span>
+          </div>
+          <div class="summary-op" aria-hidden="true">−</div>
+          <div class="summary-metric" title="Harris-Benedict Basal Metabolic Rate for this date">
+            <span class="metric-title">BMR</span>
+            <span class="metric-val text-orange">− {{ record.bmr | number:'1.2-2' }}</span>
+            <span class="metric-sub">daily baseline</span>
+          </div>
+          <div class="summary-op" aria-hidden="true">−</div>
+          <div class="summary-metric" title="Total calories burned from logged physical activities">
+            <span class="metric-title">Calories Out</span>
+            <span class="metric-val text-blue">− {{ record.totalCaloriesOut | number:'1.0-2' }}</span>
+            <span class="metric-sub">from activities</span>
+          </div>
+          <div class="summary-op" aria-hidden="true">=</div>
+          <div
+            class="summary-metric net-box"
+            [class.net-pos]="record.netCalories > 0"
+            [class.net-neg]="record.netCalories < 0"
+            title="Net Calories = Calories In - BMR - Calories Out">
+            <span class="metric-title">Net Calories</span>
+            <span class="metric-val net-val">{{ record.netCalories | number:'1.2-2' }}</span>
+            <span class="metric-sub">{{ record.netCalories > 0 ? 'Caloric Surplus' : 'Caloric Deficit' }}</span>
+          </div>
+        </div>
+
+        <!-- Food & Activity Tables matching user-details.html -->
+        <div class="view-calorie-data-chart">
+          <!-- Food Data Table -->
+          <div class="food-data white-card">
+            <div class="card-header-flex">
+              <h2>Food Data</h2>
+              <span class="badge-total">{{ record?.foodEntries?.length || 0 }} entries ({{ record?.totalCaloriesIn | number:'1.0-1' }} kcal)</span>
+            </div>
+
+            <div class="food-data-table">
+              <table
+                *ngIf="record?.foodEntries?.length"
+                class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Meal Type</th>
+                    <th scope="col">Food Group</th>
+                    <th scope="col">Serving</th>
+                    <th scope="col">Calorie In</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let entry of record?.foodEntries">
+                    <th scope="row">{{ displayFormattedDate }}</th>
+                    <td data-label="Meal Type">{{ entry.mealType }}</td>
+                    <td data-label="Food Group">
+                      <strong>{{ entry.foodName }}</strong><br>
+                      <small class="text-muted">({{ entry.foodGroup }})</small>
+                    </td>
+                    <td data-label="Serving">{{ entry.portion }} × {{ entry.servingDescription }}</td>
+                    <td data-label="Calorie In"><strong>{{ entry.calculatedCalories | number:'1.0-1' }}</strong></td>
+                    <td data-label="Action">
+                      <button
+                        type="button"
+                        class="btn-delete-entry"
+                        (click)="deleteFoodEntry(entry._id!)"
+                        title="Delete this food entry">
+                        <svg class="entry-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          <line x1="10" y1="11" x2="10" y2="17"></line>
+                          <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Illustrated Empty State for Foods -->
+              <app-empty-state
+                *ngIf="!record?.foodEntries?.length"
+                type="food"
+                title="No Food Logged for this Date"
+                description="No meals have been logged yet for {{ displayFormattedDate }}. Add breakfast, lunch, or dinner to calculate caloric intake."
+                actionLabel="+ Log Food"
+                (actionClick)="openAddData('food')">
+              </app-empty-state>
+            </div>
+          </div>
+
+          <!-- Activity Data Table -->
+          <div class="activity-data white-card">
+            <div class="card-header-flex">
+              <h2>Activity Data</h2>
+              <span class="badge-total">{{ record?.activityEntries?.length || 0 }} entries ({{ record?.totalCaloriesOut | number:'1.0-1' }} kcal)</span>
+            </div>
+
+            <div class="activity-data-table">
+              <table
+                *ngIf="record?.activityEntries?.length"
+                class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">MET Value</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Calorie Out</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let entry of record?.activityEntries">
+                    <th scope="row">{{ displayFormattedDate }}</th>
+                    <td data-label="Name">{{ entry.activityName }}</td>
+                    <td data-label="Description">{{ entry.specificMotion }}</td>
+                    <td data-label="MET Value">{{ entry.metValue }}</td>
+                    <td data-label="Duration">{{ entry.durationMinutes }} min</td>
+                    <td data-label="Calorie Out"><strong>{{ entry.calculatedCaloriesBurned | number:'1.0-1' }}</strong></td>
+                    <td data-label="Action">
+                      <button
+                        type="button"
+                        class="btn-delete-entry"
+                        (click)="deleteActivityEntry(entry._id!)"
+                        title="Delete this activity entry">
+                        <svg class="entry-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          <line x1="10" y1="11" x2="10" y2="17"></line>
+                          <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Illustrated Empty State for Activities -->
+              <app-empty-state
+                *ngIf="!record?.activityEntries?.length"
+                type="activity"
+                title="No Activities Logged for this Date"
+                description="No physical activities have been logged yet for {{ displayFormattedDate }}. Add workouts, sports, or daily walking to calculate calories burned."
+                actionLabel="+ Log Activity"
+                (actionClick)="openAddData('activity')">
+              </app-empty-state>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Reusable Add Data Modal -->
+<app-add-data-modal
+  [isOpen]="isModalOpen"
+  [initialTab]="activeModalTab"
+  [userId]="userId"
+  [userName]="user?.name || ''"
+  [userWeight]="user?.weight || 70"
+  [initialDate]="selectedDate"
+  (close)="isModalOpen = false"
+  (dataSaved)="onDataSaved($event)">
+</app-add-data-modal>

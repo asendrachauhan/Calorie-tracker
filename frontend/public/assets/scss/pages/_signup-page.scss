@@ -1,0 +1,17 @@
+.signup-container{
+    display: flex;
+    align-items: center;
+   
+    .white-card{
+        margin: 2.5rem 0;
+        width: 100%;
+        box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+    }
+    h1{
+        margin: 0px;
+        padding: 0px;
+        @extend %hd-1;
+        color: $primary-color;
+        font-weight: 500;
+    }
+}

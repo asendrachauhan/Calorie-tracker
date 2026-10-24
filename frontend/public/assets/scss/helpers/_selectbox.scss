@@ -1,0 +1,28 @@
+.btn:focus,
+.btn.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0rem #fff !important;
+}
+
+select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none \9;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.selectbox {
+    background: url("#{$assetPath}/dropdown-arrow.png") no-repeat calc(100% - 10px) center;
+    padding: 10px;
+    width: 100%;
+    border: 1px $light-gray-color solid;
+    @include text-size-color(0.8rem, $secondary-color);
+    font-family: $primaryfontfaimly;
+    font-weight: 400;
+    border-radius: 4px;
+}

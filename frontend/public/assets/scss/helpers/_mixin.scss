@@ -1,0 +1,80 @@
+@mixin truncate($truncation-boundary) {
+  max-width: $truncation-boundary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root("::-webkit-input-placeholder") {
+    @content;
+  }
+
+  @include optional-at-root(":-moz-placeholder") {
+    @content;
+  }
+
+  @include optional-at-root("::-moz-placeholder") {
+    @content;
+  }
+
+  @include optional-at-root(":-ms-input-placeholder") {
+    @content;
+  }
+}
+
+@mixin m-p-0 {
+  padding: 0px;
+  margin: 0px;
+}
+
+@mixin ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+@mixin box-shadow($top: 0, $left: 1px, $blur: 2px, $color: $default) {
+  -webkit-box-shadow: $top $left $blur $color;
+  -moz-box-shadow: $top $left $blur $color;
+  box-shadow: $top $left $blur $color;
+}
+
+@mixin text-size-color($size: 12px, $color: $white) {
+  font-size: $size;
+  color: $color;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin round-box($width, $height, $background-color, $border, $radius) {
+  width: $width;
+  height: $height;
+  background-color: $background-color;
+  border-radius: $radius;
+  border: $border;
+}
+
+@mixin square-box($width, $height, $background-color, $border) {
+  width: $width;
+  height: $height;
+  background-color: $background-color;
+  border: $border;
+}
+
+@mixin display-flex($display, $align-items, $justify-content, $flex-wrap) {
+  display: $display;
+  align-items: $vertical-align;
+  justify-content: $justify-content;
+  flex-wrap: $flex-wrap;
+}

@@ -1,0 +1,167 @@
+<div *ngIf="isOpen" class="modal-backdrop-custom" (click)="onBackdropClick($event)">
+  <div class="modal-dialog-custom">
+    <div class="modal-content add-data-modal">
+      <div class="modal-header">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <button
+              type="button"
+              class="nav-link"
+              [class.active]="activeTab === 'food'"
+              (click)="activeTab = 'food'">
+              Add Food
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              type="button"
+              class="nav-link"
+              [class.active]="activeTab === 'activity'"
+              (click)="activeTab = 'activity'">
+              Add Activity
+            </button>
+          </li>
+        </ul>
+        <button type="button" class="btn-close-modal" (click)="closeModal()" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Custom Datepicker with 30-day boundary -->
+        <div class="input-field">
+          <label>Select Date (Within last 30 days)</label>
+          <app-custom-datepicker
+            [enforce30Days]="true"
+            [(ngModel)]="date"
+            (dateChange)="onDateSelected($event)">
+          </app-custom-datepicker>
+        </div>
+
+        <!-- TAB 1: ADD FOOD -->
+        <div *ngIf="activeTab === 'food'" class="tab-pane-content">
+          <!-- Food Group Dropdown -->
+          <div class="input-field">
+            <label>Select Food Group</label>
+            <app-searchable-dropdown
+              placeholder="-- All Food Groups --"
+              [options]="foodGroupOptions"
+              [(ngModel)]="selectedFoodGroup"
+              (selectionChange)="onFoodGroupChange($event)">
+            </app-searchable-dropdown>
+          </div>
+
+          <!-- Searchable Food Item Dropdown -->
+          <div class="input-field">
+            <label>Select Food Name *</label>
+            <app-searchable-dropdown
+              placeholder="-- Search & select food --"
+              [options]="foodOptions"
+              [(ngModel)]="selectedFoodId"
+              (selectionChange)="onFoodSelected($event)"
+              (searchChange)="onFoodSearch($event)">
+            </app-searchable-dropdown>
+          </div>
+
+          <!-- Meal Type Dropdown -->
+          <div class="input-field">
+            <label>Select Meal Type *</label>
+            <app-searchable-dropdown
+              placeholder="Select Meal Type"
+              [options]="mealTypeOptions"
+              [showSearch]="false"
+              [(ngModel)]="mealType">
+            </app-searchable-dropdown>
+          </div>
+
+          <!-- Portion / Serving Input -->
+          <div class="input-field">
+            <label>Serving (Portion Multiplier) *</label>
+            <input
+              type="number"
+              step="0.5"
+              min="0.1"
+              placeholder="Serving multiplier"
+              [(ngModel)]="portion"
+              (input)="updateFoodCaloriesPreview()" />
+            <small *ngIf="selectedFood" class="field-info">
+              Base serving: <strong>{{ selectedFood.servingDescription }}</strong> ({{ selectedFood.calories }} kcal)
+            </small>
+          </div>
+
+          <!-- Live Calorie In Box -->
+          <div *ngIf="selectedFood" class="calorie-calc-pill">
+            Calculated Calorie In: <strong>{{ calculatedFoodCalories | number:'1.0-1' }} kcal</strong>
+          </div>
+
+          <div class="input-field input-field-btn btn-set--center">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="isSaving || !selectedFoodId || portion < 0.1"
+              (click)="saveFoodEntry()">
+              {{ isSaving ? 'Saving...' : 'Save' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 2: ADD ACTIVITY -->
+        <div *ngIf="activeTab === 'activity'" class="tab-pane-content">
+          <!-- Activity Category Dropdown -->
+          <div class="input-field">
+            <label>Select Category</label>
+            <app-searchable-dropdown
+              placeholder="-- All Categories --"
+              [options]="activityCategoryOptions"
+              [(ngModel)]="selectedActivityCategory"
+              (selectionChange)="onActivityCategoryChange($event)">
+            </app-searchable-dropdown>
+          </div>
+
+          <!-- Searchable Activity Motion Dropdown -->
+          <div class="input-field">
+            <label>Select Activity *</label>
+            <app-searchable-dropdown
+              placeholder="-- Search & select activity motion --"
+              [options]="activityOptions"
+              [(ngModel)]="selectedActivityId"
+              (selectionChange)="onActivitySelected($event)"
+              (searchChange)="onActivitySearch($event)">
+            </app-searchable-dropdown>
+          </div>
+
+          <!-- Duration Input (minutes) -->
+          <div class="input-field">
+            <label>Duration (Minutes) *</label>
+            <input
+              type="number"
+              min="1"
+              step="5"
+              placeholder="Duration in minutes"
+              [(ngModel)]="durationMinutes"
+              (input)="updateActivityCaloriesPreview()" />
+            <small *ngIf="selectedActivity && userWeight" class="field-info">
+              User Weight: <strong>{{ userWeight }} kg</strong> | MET Value: <strong>{{ selectedActivity.metValue }}</strong>
+            </small>
+          </div>
+
+          <!-- Live Calorie Out Box -->
+          <div *ngIf="selectedActivity && userWeight" class="calorie-calc-pill">
+            Calculated Calorie Out: <strong>{{ calculatedActivityCalories | number:'1.0-1' }} kcal</strong>
+          </div>
+
+          <div class="input-field input-field-btn btn-set--center">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="isSaving || !selectedActivityId || durationMinutes < 1"
+              (click)="saveActivityEntry()">
+              {{ isSaving ? 'Saving...' : 'Save' }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

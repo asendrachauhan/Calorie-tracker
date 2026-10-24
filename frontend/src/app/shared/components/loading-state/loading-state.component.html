@@ -1,0 +1,17 @@
+<div class="loading-state-wrapper">
+  <div *ngIf="!hasError; else errorTemplate" class="loading-box">
+    <div class="spinner-dual-ring" aria-hidden="true"></div>
+    <p class="loading-text">{{ message }}</p>
+  </div>
+
+  <ng-template #errorTemplate>
+    <div class="error-recovery-box">
+      <div class="error-icon" aria-hidden="true">⚠️</div>
+      <h4 class="error-title">Unable to Load Data</h4>
+      <p class="error-message">{{ errorMessage || 'An unexpected network error occurred while fetching information.' }}</p>
+      <button *ngIf="showRetry" type="button" class="btn btn-primary retry-btn" (click)="retry.emit()">
+        ↻ Try Again
+      </button>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,38 @@
+.checkBox {
+    input[type="checkbox"].css-checkbox {
+        position: absolute;
+        z-index: -1000;
+        left: -1000px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+    input[type="checkbox"].css-checkbox + label.css-label {
+        padding-left: 43px;
+        height: 32px;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 30px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        font-weight: 400;
+        @include text-size-color(15px, $white);
+        cursor: pointer;
+    }
+    input[type="checkbox"].css-checkbox:checked + label.css-label {
+        background-image: url("#{$assetPath}/box-checked.svg");
+    }
+    label.css-label {
+        background-image: url("#{$assetPath}/box-check.svg");
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}

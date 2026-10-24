@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="lmdBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1ab1ff"/>
+      <stop offset="100%" stop-color="#0066cc"/>
+    </linearGradient>
+    <linearGradient id="lmdGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#84cc16"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Blue globe arc -->
+  <path d="M12 28 C16 16, 32 10, 48 16 C42 12, 24 12, 16 22 Z" fill="url(#lmdBlue)"/>
+  <path d="M12 34 C16 22, 38 16, 52 24 C44 20, 24 22, 16 32 Z" fill="url(#lmdBlue)" opacity="0.85"/>
+  <!-- Green health leaf/arc -->
+  <path d="M14 36 C18 48, 34 54, 50 48 C42 52, 24 50, 16 42 Z" fill="url(#lmdGreen)"/>
+  <!-- Pulse heart line -->
+  <path d="M18 33 H25 L28 24 L34 42 L39 28 L43 35 H48" fill="none" stroke="#7952b3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

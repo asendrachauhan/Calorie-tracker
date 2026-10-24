@@ -1,0 +1,277 @@
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: $primaryfontfaimly;
+    font-weight: 400;
+    background: #f1f1f1;
+    padding: 0px;
+    margin: 0px;
+    font-size: $font-size-base;
+    color: $secondary-color;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+p {
+    line-height: $line-height;
+}
+
+a,
+a:focus,
+a:active,
+a:hover {
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    color: $secondary-color;
+    text-decoration: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+    outline: none;
+}
+
+input {
+    -webkit-appearance: none;
+    opacity: 1;
+}
+
+button,
+a {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.clear {
+    clear: both;
+}
+
+.container-fluid {
+    max-width: calc(100%);
+    padding: 0 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    @include breakpoint(mobile){
+        padding: 0 1rem;
+    }
+}
+
+.container {
+    max-width: calc(1400px);
+    padding: 0 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    @include breakpoint(mobile){
+        padding: 0 1rem;
+    }
+}
+
+.signup-container{
+    width: calc(550px);
+    padding: 0 1rem;
+    margin: auto;
+    @include breakpoint(mobile){
+        width: calc(100%);
+    }
+}
+
+.main-padding {
+    padding-top: $main-pd;
+    padding-bottom: $main-pd;
+}
+
+.white-bg {
+    background: $white;
+}
+
+.primary-bg {
+    background: $primary-color;
+}
+
+.secondary-bg {
+    background: $secondary-color;
+}
+
+
+
+.custom-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hide-desktop {
+    display: none;
+
+    @include breakpoint(mobile_portrait) {
+        display: block;
+    }
+}
+
+.hide-mobile {
+    @include breakpoint(mobile_landscape) {
+        display: block;
+    }
+
+    @include breakpoint(mobile_portrait) {
+        display: none;
+    }
+}
+
+.desc--box {
+    p {
+        &:last-child {
+            margin: 0px;
+        }
+    }
+
+    ul {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+
+        li {
+            position: relative;
+            margin: 0 0 0.6rem 0;
+            padding: 0 0 0 1.5rem;
+
+            br {
+                @include breakpoint(ipad_portrait) {
+                    display: none;
+                }
+
+                @include breakpoint(mobile) {
+                    display: none;
+                }
+            }
+
+            &::before {
+                width: 8px;
+                height: 8px;
+                position: absolute;
+                left: 0px;
+                top: 9px;
+                background: $secondary-color;
+                content: "";
+                border-radius: 50px;
+            }
+        }
+    }
+}
+
+.mid-container {
+    min-height: calc(100vh - 135px);
+}
+.title{
+    margin: 0px;
+    padding: 0;
+    @extend %hd-1;
+    color: $primary-color;
+    font-weight: 500;
+    
+}
+
+.link{
+    color: $primary-color;
+    text-decoration: underline;
+}
+
+.title-row{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px $light-gray-color solid;
+    padding: 15px 0;
+    .title-row-right{
+        margin-left: auto;
+
+    }
+}
+
+
+.summary{
+    font-size: 1rem;
+}
+.user-list{
+    margin-bottom: 2rem;
+}
+.user-list{
+    .name{
+        width: 36%;
+    }
+    .weight{
+        width: 8%;
+    }
+    .height{
+        width: 8%;
+    }
+    .gender{
+        width: 8%;
+    }
+    .age{
+        width: 8%;
+    }
+    .bmr{
+        width: 15%;
+    }
+    .Action{
+        width: 10%;
+    }
+}
+
+.user-all-date-data{
+    margin-top: 1rem;
+    h2{
+        margin: 0 0 20px 0;
+        padding: 0px;
+        @extend %hd-2;
+    }
+    .white-card{
+        padding: 2.5rem;
+        @include breakpoint(mobile){
+            padding: 1rem;
+        }
+    }
+    .date-input-card{
+        padding: 20px 0;  
+       
+         .date-input{
+            width: 250px;
+            margin-left: auto;
+            @include breakpoint(mobile_portrait){
+              width: 100%;
+            }
+             input {
+                 padding: 10px;
+                 width: 100%;
+                 border: 1px $light-gray-color solid;
+                 @include text-size-color(0.8rem, $secondary-color);
+                 background: #fff;
+                 font-family: $primaryfontfaimly;
+                 font-weight: 400;
+                 -webkit-appearance: none;
+                 border-radius: 4px;
+                 &:disabled {
+                     opacity: 0.5;
+                 }
+             }
+        
+         }
+         
+     }
+}

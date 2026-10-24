@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Core Brand Colors */
+  --color-primary: #7952b3;
+  --color-primary-hover: #613d97;
+  --color-primary-light: rgba(121, 82, 179, 0.08);
+  --color-primary-border: rgba(121, 82, 179, 0.25);
+  --color-accent: #1ab1ff;
+  --color-accent-hover: #0099e6;
+
+  /* Neutrals & Typography */
+  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --color-text-main: #333333;
+  --color-text-heading: #212529;
+  --color-text-muted: #666666;
+  --color-text-light: #888888;
+  --color-border: #e7e5ec;
+  --color-border-subtle: #f0edf5;
+
+  /* Surfaces & Backgrounds */
+  --bg-page: #f7f9fa;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-hover: #f3f0f7;
+
+  /* Status Colors */
+  --color-success: #28a745;
+  --color-success-bg: #d4edda;
+  --color-success-border: #c3e6cb;
+  --color-success-text: #155724;
+
+  --color-danger: #dc3545;
+  --color-danger-bg: #f8d7da;
+  --color-danger-border: #f5c6cb;
+  --color-danger-text: #721c24;
+
+  --color-warning: #ffc107;
+  --color-warning-bg: #fff3cd;
+  --color-warning-border: #ffeeba;
+  --color-warning-text: #856404;
+
+  --color-info: #17a2b8;
+  --color-info-bg: #d1ecf1;
+  --color-info-border: #bee5eb;
+  --color-info-text: #0c5460;
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-dropdown: 0 10px 25px rgba(0, 0, 0, 0.12);
+  --shadow-modal: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  /* Border Radii */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.2s ease-in-out;
+}
+
+/* Global base styles */
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mid Container Spacing */
+.mid-container {
+  min-height: calc(100vh - 140px);
+  padding-top: 16px;
+  padding-bottom: 32px;
+}
+
+/* Card layout & typography polish */
+.white-card {
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: box-shadow var(--transition-normal);
+}
+
+/* Accessible focus outline */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Tooltips & Cursors */
+[title] {
+  cursor: inherit;
+}
+button[title], a[title], [role="button"][title], input[type="button"][title], input[type="submit"][title] {
+  cursor: pointer;
+}
+
+/* Accessible hidden class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Standard Alert & Dismissible Banner Styles */
+.alert {
+  position: relative;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.alert-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.alert-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.alert-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  line-height: 1;
+  padding: 4px 6px;
+  cursor: pointer;
+  opacity: 0.65;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast), background-color var(--transition-fast);
+  color: inherit;
+  font-family: inherit;
+}
+
+.alert-close-btn:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.alert-danger {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger-text);
+  border: 1px solid var(--color-danger-border);
+}
+
+.alert-success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success-text);
+  border: 1px solid var(--color-success-border);
+}
+
+.alert-warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  border: 1px solid var(--color-warning-border);
+}
+
+.alert-info {
+  background-color: var(--color-info-bg);
+  color: var(--color-info-text);
+  border: 1px solid var(--color-info-border);
+}

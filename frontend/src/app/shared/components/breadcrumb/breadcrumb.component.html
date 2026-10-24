@@ -1,0 +1,31 @@
+<nav aria-label="Breadcrumb" class="standard-breadcrumb-nav">
+  <ol class="standard-breadcrumb-list">
+    <li
+      *ngFor="let item of items; let last = last; trackBy: trackByItem"
+      class="standard-breadcrumb-item"
+      [class.active]="last || item.active">
+      
+      <ng-container *ngIf="!last && !item.active && item.url; else currentItem">
+        <a
+          [routerLink]="item.url"
+          [queryParams]="item.queryParams"
+          (click)="onNavigate(item, $event)"
+          (keydown.enter)="onNavigate(item, $event)"
+          (keydown.space)="onNavigate(item, $event)"
+          tabindex="0"
+          class="breadcrumb-link"
+          role="link">
+          {{ item.label }}
+        </a>
+        <span class="breadcrumb-separator" aria-hidden="true">/</span>
+      </ng-container>
+
+      <ng-template #currentItem>
+        <span class="breadcrumb-current" [attr.aria-current]="(last || item.active) ? 'page' : null">
+          {{ item.label }}
+        </span>
+      </ng-template>
+    </li>
+  </ol>
+</nav>
+

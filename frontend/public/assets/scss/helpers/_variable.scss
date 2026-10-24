@@ -1,0 +1,26 @@
+a,
+button {
+  cursor: pointer;
+}
+
+// Base Font faimly
+// font-family: 'Poppins', sans-serif;
+$primaryfontfaimly: "Poppins", sans-serif;
+
+// Base font size
+
+$font-size-base: 12px;
+
+// Main line height
+$line-height: 1.6rem;
+
+$main-pd: 40px;
+
+// Set Image Path
+$assetPath: "../img";
+$iconsAssetPath: "../img/icons";
+$fontsPath: "../webfonts";
+
+// Button Font Size
+
+$btn-font-size-base: $font-size-base;

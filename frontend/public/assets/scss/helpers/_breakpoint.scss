@@ -1,0 +1,53 @@
+// Global Breakpoint
+
+@mixin breakpoint($media) {
+  @if $media==big_screen {
+    @media (min-width: 1601px) and (max-width: 30000px) {
+      @content;
+    }
+  } 
+  @else if $media==desktop {
+    @media (min-width: 1300px) and (max-width: 1600px) {
+      @content; 
+    }
+  }
+  @else if $media==common-ipad-desktop {
+    @media (min-width: 991px) and (max-width: 1380px) {
+      @content; 
+    }
+  }
+  @else if $media==desktop-sm {
+    @media (min-width: 1025px) and (max-width: 1299px) {
+      @content;
+    }
+  }
+  @else if $media==ipad_landscape {
+    @media (min-width: 992px) and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $media==ipad_portrait {
+    @media (min-width: 768px) and (max-width: 991px) {
+      @content;
+    }
+  } @else if $media==ipad {
+    @media (min-width: 768px) and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $media==mobile_landscape {
+    @media (min-width: 568px) and (max-width: 767px) {
+      @content;
+    }
+  } @else if $media==mobile_portrait {
+    @media (min-width: 320px) and (max-width: 567px) {
+      @content;
+     }
+  } @else if $media==mobile {
+    @media (min-width: 320px) and (max-width: 767px) {
+      @content;
+    }
+  } @else if $media==mobile_nav {
+    @media (min-width: 320px) and (max-width: 991px) {
+      @content;
+    }
+  }
+}

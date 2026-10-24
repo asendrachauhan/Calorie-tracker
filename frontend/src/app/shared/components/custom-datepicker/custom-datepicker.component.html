@@ -1,0 +1,72 @@
+<div class="custom-datepicker-wrapper">
+  <!-- Input Trigger Display -->
+  <div
+    class="datepicker-input-box"
+    [class.is-open]="isOpen"
+    [class.disabled]="disabled"
+    (click)="toggleCalendar($event)"
+    [title]="placeholder">
+    <span class="selected-text" [class.placeholder]="!selectedDate">
+      {{ formattedDisplayDate || placeholder }}
+    </span>
+    <img src="assets/img/calendar.png" alt="Select date" class="calendar-icon" />
+  </div>
+
+  <!-- Calendar Popup Popover with auto-placement (above/below and left/right) -->
+  <div
+    *ngIf="isOpen"
+    class="calendar-popover"
+    [class.place-above]="placeAbove"
+    [class.align-right]="alignRight"
+    (click)="$event.stopPropagation()">
+    <!-- Header: Month & Year navigation with direct selectors -->
+    <div class="calendar-header">
+      <button type="button" class="btn-nav" (click)="prevMonth()" title="Previous month">‹</button>
+      <div class="header-selectors">
+        <select
+          class="header-select month-select"
+          [ngModel]="viewDate.getMonth()"
+          (ngModelChange)="onMonthSelect($event)"
+          title="Select Month">
+          <option *ngFor="let name of monthNames; let i = index" [value]="i">{{ name }}</option>
+        </select>
+        <select
+          class="header-select year-select"
+          [ngModel]="viewDate.getFullYear()"
+          (ngModelChange)="onYearSelect($event)"
+          title="Select Year">
+          <option *ngFor="let y of availableYears" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+      <button type="button" class="btn-nav" (click)="nextMonth()" title="Next month">›</button>
+    </div>
+
+    <!-- Weekdays Header -->
+    <div class="calendar-weekdays">
+      <span *ngFor="let day of weekDayNames">{{ day }}</span>
+    </div>
+
+    <!-- Days Grid -->
+    <div class="calendar-grid">
+      <button
+        type="button"
+        *ngFor="let cell of calendarDays"
+        class="calendar-day"
+        [class.other-month]="!cell.isCurrentMonth"
+        [class.today]="cell.isToday"
+        [class.selected]="cell.isSelected"
+        [class.disabled]="cell.isDisabled"
+        [disabled]="cell.isDisabled"
+        [title]="cell.dateString"
+        (click)="selectDate(cell)">
+        {{ cell.dayNumber }}
+      </button>
+    </div>
+
+    <!-- Quick actions footer -->
+    <div class="calendar-footer">
+      <button type="button" class="btn-today" (click)="selectToday()">Today</button>
+      <button type="button" class="btn-clear" (click)="clearSelection()">Clear</button>
+    </div>
+  </div>
+</div>

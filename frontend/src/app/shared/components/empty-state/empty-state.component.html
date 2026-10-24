@@ -1,0 +1,69 @@
+<div class="empty-state-card" [class.compact]="compact">
+  <div class="illustration-wrap" [ngSwitch]="type">
+    <!-- Users illustration -->
+    <svg *ngSwitchCase="'users'" class="empty-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="54" fill="#F4EFFB" stroke="#E1D3F5" stroke-width="2"/>
+      <circle cx="50" cy="48" r="16" fill="#7952B3" fill-opacity="0.85"/>
+      <path d="M26 86C26 73.8497 35.8497 64 48 64H52C64.1503 64 74 73.8497 74 86V88H26V86Z" fill="#7952B3" fill-opacity="0.85"/>
+      <circle cx="78" cy="44" r="12" fill="#1AB1FF" fill-opacity="0.85"/>
+      <path d="M66 84C66.8 75.2 73.6 68 82 68H84C92.4 68 99.2 75.2 100 84V86H66V84Z" fill="#1AB1FF" fill-opacity="0.85"/>
+      <circle cx="92" cy="30" r="14" fill="#28A745"/>
+      <path d="M92 24V36M86 30H98" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Records / History illustration -->
+    <svg *ngSwitchCase="'records'" class="empty-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="54" fill="#F0F8FF" stroke="#D1E9FF" stroke-width="2"/>
+      <rect x="34" y="32" width="52" height="58" rx="8" fill="#FFFFFF" stroke="#1AB1FF" stroke-width="2.5"/>
+      <path d="M34 46H86" stroke="#1AB1FF" stroke-width="2"/>
+      <circle cx="48" cy="28" r="3" fill="#7952B3"/>
+      <circle cx="72" cy="28" r="3" fill="#7952B3"/>
+      <line x1="44" y1="58" x2="62" y2="58" stroke="#7952B3" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="44" y1="68" x2="74" y2="68" stroke="#9E8BB5" stroke-width="2" stroke-linecap="round"/>
+      <line x1="44" y1="76" x2="56" y2="76" stroke="#C4B8D6" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="86" cy="80" r="15" fill="#FD7E14"/>
+      <path d="M86 73V81L91 84" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <!-- Food illustration -->
+    <svg *ngSwitchCase="'food'" class="empty-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="54" fill="#F3FAF4" stroke="#DCF2E0" stroke-width="2"/>
+      <circle cx="60" cy="60" r="34" fill="#FFFFFF" stroke="#28A745" stroke-width="2.5"/>
+      <circle cx="60" cy="60" r="24" fill="#E8F6EB"/>
+      <path d="M22 42V56C22 61 26 65 30 65V88H34V65C38 65 42 61 42 56V42H38V54H35V42H31V54H28V42H22Z" fill="#28A745" fill-opacity="0.8"/>
+      <path d="M96 42C90 42 86 48 86 55C86 61.5 90 66 94 67V88H98V67C102 66 106 61.5 106 55C106 48 102 42 96 42Z" fill="#28A745" fill-opacity="0.8"/>
+      <path d="M60 48C53 48 48 53 48 60C48 68 56 74 60 74C64 74 72 68 72 60C72 53 67 48 60 48Z" fill="#28A745"/>
+      <path d="M60 44C60 44 62 47 64 48" stroke="#1E7E34" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Activity illustration -->
+    <svg *ngSwitchCase="'activity'" class="empty-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="54" fill="#FFF8F0" stroke="#FFE7D0" stroke-width="2"/>
+      <circle cx="68" cy="38" r="8" fill="#FD7E14"/>
+      <path d="M52 56L64 50L74 58L86 52" stroke="#FD7E14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M64 50L58 68L44 76" stroke="#FD7E14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M58 68L70 82L84 86" stroke="#FD7E14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22 68H32L38 56L44 78L50 68H54" stroke="#7952B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <!-- Search / Generic illustration -->
+    <svg *ngSwitchDefault class="empty-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="54" fill="#F8F9FA" stroke="#E9ECEF" stroke-width="2"/>
+      <circle cx="54" cy="54" r="22" stroke="#7952B3" stroke-width="4"/>
+      <path d="M70 70L88 88" stroke="#7952B3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="44" y1="54" x2="64" y2="54" stroke="#B8A5D6" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <h3 class="empty-title">{{ title }}</h3>
+  <p class="empty-desc">{{ description }}</p>
+
+  <div *ngIf="actionLabel" class="empty-actions">
+    <a *ngIf="actionLink" [routerLink]="actionLink" class="btn btn-primary action-btn">
+      {{ actionLabel }}
+    </a>
+    <button *ngIf="!actionLink" type="button" class="btn btn-primary action-btn" (click)="actionClick.emit()">
+      {{ actionLabel }}
+    </button>
+  </div>
+</div>
