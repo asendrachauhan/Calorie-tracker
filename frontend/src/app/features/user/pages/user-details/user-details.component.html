@@ -37,14 +37,6 @@
         </div>
       </div>
 
-      <!-- User Metrics Pill Card -->
-      <div *ngIf="user" class="user-stats-bar">
-        <div class="stat-item"><span class="stat-label">Gender:</span> <strong class="capitalize">{{ user.gender }}</strong></div>
-        <div class="stat-item"><span class="stat-label">Age:</span> <strong>{{ user.age }} yrs</strong></div>
-        <div class="stat-item"><span class="stat-label">Weight:</span> <strong>{{ user.weight }} kg</strong></div>
-        <div class="stat-item"><span class="stat-label">Height:</span> <strong>{{ user.height }} cm</strong></div>
-        <div class="stat-item"><span class="stat-label">Daily BMR:</span> <strong>{{ user.bmr | number:'1.2-2' }} kcal</strong></div>
-      </div>
 
       <!-- Date selector and display matching user-details.html -->
       <div class="view-calorie-data">

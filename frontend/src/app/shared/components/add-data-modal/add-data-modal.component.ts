@@ -72,6 +72,11 @@ export class AddDataModalComponent implements OnInit, OnChanges {
 
   isSaving = false;
 
+  private defaultFoods: Food[] = [];
+  private defaultFoodOptions: DropdownOption<number>[] = [];
+  private defaultActivities: Activity[] = [];
+  private defaultActivityOptions: DropdownOption<string>[] = [];
+
   ngOnInit(): void {
     this.date = this.initialDate || getLocalDateString();
     this.loadFoodGroups();
@@ -129,6 +134,13 @@ export class AddDataModalComponent implements OnInit, OnChanges {
   }
 
   loadFoods(group?: string): void {
+    if (!group && this.defaultFoods.length > 0) {
+      this.foods = [...this.defaultFoods];
+      this.foodOptions = [...this.defaultFoodOptions];
+      this.cdr.markForCheck();
+      return;
+    }
+
     this.foodService.searchFoods('', group, 100).subscribe({
       next: (foods: Food[]) => {
         this.foods = foods;
@@ -137,6 +149,10 @@ export class AddDataModalComponent implements OnInit, OnChanges {
           value: f.foodId,
           subtext: `${f.calories} kcal | ${f.servingDescription} (${f.foodGroup})`
         }));
+        if (!group && this.defaultFoods.length === 0) {
+          this.defaultFoods = foods;
+          this.defaultFoodOptions = this.foodOptions;
+        }
         this.cdr.markForCheck();
       },
       error: () => {
@@ -200,6 +216,13 @@ export class AddDataModalComponent implements OnInit, OnChanges {
   }
 
   loadActivities(category?: string): void {
+    if (!category && this.defaultActivities.length > 0) {
+      this.activities = [...this.defaultActivities];
+      this.activityOptions = [...this.defaultActivityOptions];
+      this.cdr.markForCheck();
+      return;
+    }
+
     this.activityService.searchActivities('', category, 100).subscribe({
       next: (activities: Activity[]) => {
         this.activities = activities;
@@ -208,6 +231,10 @@ export class AddDataModalComponent implements OnInit, OnChanges {
           value: a.activityId,
           subtext: `${a.specificMotion} (MET: ${a.metValue})`
         }));
+        if (!category && this.defaultActivities.length === 0) {
+          this.defaultActivities = activities;
+          this.defaultActivityOptions = this.activityOptions;
+        }
         this.cdr.markForCheck();
       },
       error: () => {
