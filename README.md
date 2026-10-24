@@ -242,18 +242,20 @@ Run the backend and frontend in separate terminal windows.
 ### 1. Start the Backend API
 ```bash
 cd backend
+npm install
 npm run dev
 ```
-- Starts the Express server with `nodemon` on `http://localhost:5000`.
+- Installs backend dependencies and starts the Express server with `nodemon` on `http://localhost:5000`.
 - Alternatively, use `npm start` to run with `node server.js`.
 - Health check endpoint is available at `http://localhost:5000/api/health`.
 
 ### 2. Start the Frontend Client
 ```bash
 cd frontend
+npm install
 npm start
 ```
-- Starts the Angular development server (`ng serve`) on `http://localhost:4200`.
+- Installs frontend dependencies and starts the Angular development server (`ng serve`) on `http://localhost:4200`.
 - Open a browser and navigate to `http://localhost:4200`.
 
 ---
